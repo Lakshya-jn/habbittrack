@@ -344,6 +344,7 @@ function checkAuth() {
   const name = currentUser.name || currentUser.email;
   document.getElementById("userName").textContent = name.split(" ")[0];
   document.getElementById("userAvatar").textContent = name.charAt(0).toUpperCase();
+  document.getElementById("dateChip").textContent = new Date().toLocaleDateString("en-IN", {weekday:"short",day:"numeric",month:"short",year:"numeric"});
 }
 async function toggleNotifications() {
   const btn = document.getElementById("notifBtn");
