@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>HabbitTrack — Reset Password</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root { --bg:#0f1117; --bg2:#161b26; --card:#1c2233; --border:#2a3147; --text:#f0f2ff; --muted:#7a85a8; --orange:#f97316; --orange-dim:rgba(249,115,22,0.15); --orange-glow:rgba(249,115,22,0.3); --purple:#8b5cf6; --blue:#3b82f6; --green:#10b981; --green-dim:rgba(16,185,129,0.15); --red:#ef4444; --red-dim:rgba(239,68,68,0.15); }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:'Space Grotesk',sans-serif; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:16px; }
+.card { background:var(--card); border:1px solid var(--border); border-radius:24px; padding:32px 24px; width:100%; max-width:420px; position:relative; overflow:hidden; }
+.card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--orange),var(--purple),var(--blue)); }
+.logo { display:flex; align-items:center; gap:12px; margin-bottom:28px; justify-content:center; }
+.logo-icon { width:44px; height:44px; background:var(--orange); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:22px; box-shadow:0 0 24px var(--orange-glow); }
+.logo-name { font-family:'Nunito',sans-serif; font-weight:900; font-size:1.6rem; }
+.logo-name span { color:var(--orange); }
+.form-group { margin-bottom:16px; }
+.form-label { display:block; font-size:0.75rem; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:8px; }
+.form-input { width:100%; background:var(--bg2); border:1.5px solid var(--border); border-radius:12px; padding:14px 16px; color:var(--text); font-family:'Space Grotesk',sans-serif; font-size:1rem; font-weight:500; outline:none; transition:border-color .2s; }
+.form-input:focus { border-color:var(--orange); box-shadow:0 0 0 3px var(--orange-dim); }
+.submit-btn { width:100%; background:var(--orange); color:#fff; border:none; border-radius:12px; padding:16px; font-family:'Nunito',sans-serif; font-weight:800; font-size:1rem; cursor:pointer; box-shadow:0 4px 20px var(--orange-glow); margin-top:8px; }
+.submit-btn:active { transform:scale(.97); }
+.submit-btn:disabled { opacity:.6; }
+.msg { padding:12px 16px; border-radius:10px; font-size:0.82rem; font-weight:600; margin-bottom:16px; display:none; }
+.msg.error { background:var(--red-dim); color:var(--red); border:1px solid rgba(239,68,68,0.3); display:block; }
+.msg.success { background:var(--green-dim); color:var(--green); border:1px solid rgba(16,185,129,0.3); display:block; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">
+    <div class="logo-icon">⛰️</div>
+    <div class="logo-name">Habbit<span>Track</span></div>
+  </div>
+  <div style="text-align:center;margin-bottom:24px;">
+    <div style="font-size:2rem;margin-bottom:8px;">🔑</div>
+    <div style="font-size:0.85rem;color:var(--muted);">Enter your new password below</div>
+  </div>
+  <div id="msgBox" class="msg"></div>
+  <div id="resetForm">
+    <div class="form-group">
+      <label class="form-label">New Password</label>
+      <input class="form-input" id="newPassword" type="password" placeholder="Min 6 characters"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Confirm Password</label>
+      <input class="form-input" id="confirmPassword" type="password" placeholder="Repeat your password"/>
+    </div>
+    <button class="submit-btn" id="resetBtn" onclick="resetPassword()">Update Password 🔐</button>
+  </div>
+</div>
+<script>
+const SUPABASE_URL = "https://mgysuyanggfbtybtfhpv.supabase.co";
+const SUPABASE_KEY = "sb_publishable_lxp9nPGeL9pcQCv7e63PAA_DTHKJgpb";
+
+function showMsg(text, type) { const box = document.getElementById("msgBox"); box.textContent = text; box.className = "msg " + type; }
+
+// Get access token from URL hash
+function getTokenFromURL() {
+  const hash = window.location.hash.substring(1);
+  const params = new URLSearchParams(hash);
+  return params.get("access_token");
+}
+
+async function resetPassword() {
+  const newPass = document.getElementById("newPassword").value;
+  const confirmPass = document.getElementById("confirmPassword").value;
+  if (!newPass || !confirmPass) { showMsg("Please fill in both fields", "error"); return; }
+  if (newPass.length < 6) { showMsg("Password must be at least 6 characters", "error"); return; }
+  if (newPass !== confirmPass) { showMsg("Passwords do not match", "error"); return; }
+  const token = getTokenFromURL();
+  if (!token) { showMsg("Invalid or expired reset link. Please request a new one.", "error"); return; }
+  const btn = document.getElementById("resetBtn");
+  btn.disabled = true; btn.textContent = "Updating...";
+  try {
+    const res = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+      method: "PUT",
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ password: newPass })
+    });
+    const data = await res.json();
+    if (data.error) { showMsg(data.error, "error"); }
+    else {
+      showMsg("✅ Password updated! Redirecting to login...", "success");
+      setTimeout(() => window.location.href = "login.html", 2000);
+    }
+  } catch(e) { showMsg("Something went wrong. Try again!", "error"); }
+  btn.disabled = false; btn.textContent = "Update Password 🔐";
+}
+</script>
+</body>
+</html>
