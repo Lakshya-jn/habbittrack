@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 <title>HabbitTrack — Login</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
@@ -10,39 +10,30 @@
   --bg: #0f1117; --bg2: #161b26; --card: #1c2233;
   --border: #2a3147; --border2: #3a4460; --text: #f0f2ff; --muted: #7a85a8;
   --orange: #f97316; --orange-light: #ff9a4a; --orange-dim: rgba(249,115,22,0.15);
-  --orange-glow: rgba(249,115,22,0.3); --purple: #8b5cf6; --purple-dim: rgba(139,92,246,0.15);
-  --blue: #3b82f6; --green: #10b981; --green-dim: rgba(16,185,129,0.15);
+  --orange-glow: rgba(249,115,22,0.3); --purple: #8b5cf6; --blue: #3b82f6;
+  --green: #10b981; --green-dim: rgba(16,185,129,0.15);
   --red: #ef4444; --red-dim: rgba(239,68,68,0.15);
 }
-* { margin:0; padding:0; box-sizing:border-box; }
-body {
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
+html, body {
   background: var(--bg);
   color: var(--text);
   font-family: 'Space Grotesk', sans-serif;
   min-height: 100vh;
+  min-height: -webkit-fill-available;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 16px;
 }
-
-/* BG DECORATION */
-.bg-orb {
-  position: fixed;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.15;
-  pointer-events: none;
-}
-.bg-orb.one { width: 400px; height: 400px; background: var(--orange); top: -100px; right: -100px; }
-.bg-orb.two { width: 300px; height: 300px; background: var(--purple); bottom: -80px; left: -80px; }
-
-/* CARD */
+.bg-orb { position: fixed; border-radius: 50%; filter: blur(80px); opacity: 0.12; pointer-events: none; }
+.bg-orb.one { width: 300px; height: 300px; background: var(--orange); top: -80px; right: -80px; }
+.bg-orb.two { width: 250px; height: 250px; background: var(--purple); bottom: -60px; left: -60px; }
 .auth-card {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 24px;
-  padding: 40px 36px;
+  padding: 32px 24px;
   width: 100%;
   max-width: 420px;
   position: relative;
@@ -55,177 +46,79 @@ body {
   height: 3px;
   background: linear-gradient(90deg, var(--orange), var(--purple), var(--blue));
 }
-
-/* LOGO */
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 32px;
-  justify-content: center;
-}
-.logo-icon {
-  width: 44px; height: 44px;
-  background: var(--orange);
-  border-radius: 12px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px;
-  box-shadow: 0 0 24px var(--orange-glow);
-}
-.logo-name {
-  font-family: 'Nunito', sans-serif;
-  font-weight: 900;
-  font-size: 1.6rem;
-  letter-spacing: -0.5px;
-}
-.logo-name span { color: var(--orange); }
-
-/* TABS */
-.tabs {
-  display: flex;
-  background: var(--bg2);
-  border-radius: 12px;
-  padding: 4px;
-  margin-bottom: 28px;
-  gap: 4px;
-}
-.tab-btn {
-  flex: 1;
-  padding: 10px;
-  border: none;
-  border-radius: 9px;
-  background: transparent;
-  color: var(--muted);
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.88rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all .2s;
-}
-.tab-btn.active {
-  background: var(--card);
-  color: var(--text);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-}
-
-/* FORM */
-.form-group { margin-bottom: 18px; }
-.form-label {
-  display: block;
-  font-size: 0.78rem;
-  color: var(--muted);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  margin-bottom: 8px;
-}
+.logo { display:flex; align-items:center; gap:12px; margin-bottom:28px; justify-content:center; }
+.logo-icon { width:44px; height:44px; background:var(--orange); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:22px; box-shadow:0 0 24px var(--orange-glow); }
+.logo-name { font-family:'Nunito',sans-serif; font-weight:900; font-size:1.6rem; letter-spacing:-0.5px; }
+.logo-name span { color:var(--orange); }
+.tabs { display:flex; background:var(--bg2); border-radius:12px; padding:4px; margin-bottom:24px; gap:4px; }
+.tab-btn { flex:1; padding:10px; border:none; border-radius:9px; background:transparent; color:var(--muted); font-family:'Space Grotesk',sans-serif; font-size:0.88rem; font-weight:600; cursor:pointer; transition:all .2s; }
+.tab-btn.active { background:var(--card); color:var(--text); box-shadow:0 2px 8px rgba(0,0,0,0.3); }
+.form-group { margin-bottom:16px; }
+.form-label { display:block; font-size:0.75rem; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:8px; }
 .form-input {
-  width: 100%;
-  background: var(--bg2);
-  border: 1.5px solid var(--border);
-  border-radius: 12px;
-  padding: 13px 16px;
-  color: var(--text);
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.95rem;
-  font-weight: 500;
-  outline: none;
-  transition: border-color .2s, box-shadow .2s;
+  width:100%;
+  background:var(--bg2);
+  border:1.5px solid var(--border);
+  border-radius:12px;
+  padding:14px 16px;
+  color:var(--text);
+  font-family:'Space Grotesk',sans-serif;
+  font-size:1rem;
+  font-weight:500;
+  outline:none;
+  transition:border-color .2s, box-shadow .2s;
+  -webkit-appearance: none;
 }
-.form-input:focus {
-  border-color: var(--orange);
-  box-shadow: 0 0 0 3px var(--orange-dim);
-}
-.form-input::placeholder { color: var(--muted); }
-
-/* SUBMIT BTN */
+.form-input:focus { border-color:var(--orange); box-shadow:0 0 0 3px var(--orange-dim); }
+.form-input::placeholder { color:var(--muted); }
 .submit-btn {
-  width: 100%;
-  background: var(--orange);
-  color: #fff;
-  border: none;
-  border-radius: 12px;
-  padding: 14px;
-  font-family: 'Nunito', sans-serif;
-  font-weight: 800;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all .2s;
-  box-shadow: 0 4px 20px var(--orange-glow);
-  margin-top: 8px;
+  width:100%;
+  background:var(--orange);
+  color:#fff;
+  border:none;
+  border-radius:12px;
+  padding:16px;
+  font-family:'Nunito',sans-serif;
+  font-weight:800;
+  font-size:1rem;
+  cursor:pointer;
+  transition:all .2s;
+  box-shadow:0 4px 20px var(--orange-glow);
+  margin-top:8px;
+  -webkit-appearance: none;
 }
-.submit-btn:hover { background: var(--orange-light); transform: translateY(-1px); box-shadow: 0 6px 28px var(--orange-glow); }
-.submit-btn:active { transform: scale(.98); }
-.submit-btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+.submit-btn:active { transform:scale(.97); opacity:.9; }
+.submit-btn:disabled { opacity:.6; cursor:not-allowed; }
+.msg { padding:12px 16px; border-radius:10px; font-size:0.82rem; font-weight:600; margin-bottom:16px; display:none; }
+.msg.error { background:var(--red-dim); color:var(--red); border:1px solid rgba(239,68,68,0.3); display:block; }
+.msg.success { background:var(--green-dim); color:var(--green); border:1px solid rgba(16,185,129,0.3); display:block; }
+.features { margin-top:24px; display:flex; justify-content:center; gap:16px; flex-wrap:wrap; }
+.feature { display:flex; align-items:center; gap:5px; font-size:0.7rem; color:var(--muted); font-weight:500; }
 
-/* MESSAGE */
-.msg {
-  padding: 12px 16px;
-  border-radius: 10px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  margin-bottom: 18px;
-  display: none;
+/* Mobile specific */
+@media (max-width: 480px) {
+  body { padding: 12px; align-items: flex-start; padding-top: 40px; }
+  .auth-card { padding: 28px 20px; border-radius: 20px; }
+  .logo-name { font-size: 1.4rem; }
+  .logo-icon { width: 40px; height: 40px; font-size: 20px; }
+  .features { gap: 12px; }
+  .feature { font-size: 0.68rem; }
 }
-.msg.error { background: var(--red-dim); color: var(--red); border: 1px solid rgba(239,68,68,0.3); display: block; }
-.msg.success { background: var(--green-dim); color: var(--green); border: 1px solid rgba(16,185,129,0.3); display: block; }
-
-/* DIVIDER */
-.divider {
-  text-align: center;
-  color: var(--muted);
-  font-size: 0.75rem;
-  margin: 20px 0;
-  position: relative;
-}
-.divider::before, .divider::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  width: 40%;
-  height: 1px;
-  background: var(--border);
-}
-.divider::before { left: 0; }
-.divider::after { right: 0; }
-
-.features {
-  margin-top: 28px;
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-.feature {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.72rem;
-  color: var(--muted);
-  font-weight: 500;
-}
-.feature span { font-size: 14px; }
 </style>
 </head>
 <body>
-
 <div class="bg-orb one"></div>
 <div class="bg-orb two"></div>
-
 <div class="auth-card">
   <div class="logo">
     <div class="logo-icon">⛰️</div>
     <div class="logo-name">Habbit<span>Track</span></div>
   </div>
-
   <div class="tabs">
     <button class="tab-btn active" onclick="switchTab('login')">Login</button>
     <button class="tab-btn" onclick="switchTab('signup')">Sign Up</button>
   </div>
-
   <div id="msgBox" class="msg"></div>
-
-  <!-- LOGIN FORM -->
   <div id="loginForm">
     <div class="form-group">
       <label class="form-label">Email</label>
@@ -233,16 +126,14 @@ body {
     </div>
     <div class="form-group">
       <label class="form-label">Password</label>
-      <input class="form-input" id="loginPassword" type="password" placeholder="Enter your password"/>
+      <input class="form-input" id="loginPassword" type="password" placeholder="Enter your password" autocomplete="current-password"/>
     </div>
     <button class="submit-btn" id="loginBtn" onclick="login()">Login to HabbitTrack 🔥</button>
   </div>
-
-  <!-- SIGNUP FORM -->
   <div id="signupForm" style="display:none">
     <div class="form-group">
       <label class="form-label">Full Name</label>
-      <input class="form-input" id="signupName" type="text" placeholder="Your name"/>
+      <input class="form-input" id="signupName" type="text" placeholder="Your name" autocomplete="name"/>
     </div>
     <div class="form-group">
       <label class="form-label">Email</label>
@@ -250,19 +141,17 @@ body {
     </div>
     <div class="form-group">
       <label class="form-label">Password</label>
-      <input class="form-input" id="signupPassword" type="password" placeholder="Min 6 characters"/>
+      <input class="form-input" id="signupPassword" type="password" placeholder="Min 6 characters" autocomplete="new-password"/>
     </div>
     <button class="submit-btn" id="signupBtn" onclick="signup()">Create Account 🚀</button>
   </div>
-
   <div class="features">
-    <div class="feature"><span>🔥</span> Streak Tracking</div>
+    <div class="feature"><span>🔥</span> Streaks</div>
     <div class="feature"><span>🤖</span> AI Priority</div>
     <div class="feature"><span>📊</span> Heatmap</div>
     <div class="feature"><span>🎊</span> Confetti</div>
   </div>
 </div>
-
 <script>
 const API = "https://habbittrack-backend.onrender.com";
 function switchTab(tab) {
@@ -271,16 +160,8 @@ function switchTab(tab) {
   document.getElementById("signupForm").style.display = tab === "signup" ? "block" : "none";
   hideMsg();
 }
-
-function showMsg(text, type) {
-  const box = document.getElementById("msgBox");
-  box.textContent = text;
-  box.className = "msg " + type;
-}
-function hideMsg() {
-  document.getElementById("msgBox").className = "msg";
-}
-
+function showMsg(text, type) { const box = document.getElementById("msgBox"); box.textContent = text; box.className = "msg " + type; }
+function hideMsg() { document.getElementById("msgBox").className = "msg"; }
 async function login() {
   const email = document.getElementById("loginEmail").value.trim();
   const password = document.getElementById("loginPassword").value;
@@ -288,11 +169,7 @@ async function login() {
   const btn = document.getElementById("loginBtn");
   btn.disabled = true; btn.textContent = "Logging in...";
   try {
-    const res = await fetch(`${API}/api/auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password })
-    });
+    const res = await fetch(`${API}/api/auth/login`, { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({email, password}) });
     const data = await res.json();
     if (data.error) { showMsg(data.error, "error"); }
     else {
@@ -301,12 +178,9 @@ async function login() {
       showMsg("Login successful! Redirecting...", "success");
       setTimeout(() => window.location.href = "app.html", 800);
     }
-  } catch(e) {
-    showMsg("Cannot connect to server. Is backend running?", "error");
-  }
+  } catch(e) { showMsg("Cannot connect to server. Try again!", "error"); }
   btn.disabled = false; btn.textContent = "Login to HabbitTrack 🔥";
 }
-
 async function signup() {
   const name = document.getElementById("signupName").value.trim();
   const email = document.getElementById("signupEmail").value.trim();
@@ -316,32 +190,14 @@ async function signup() {
   const btn = document.getElementById("signupBtn");
   btn.disabled = true; btn.textContent = "Creating account...";
   try {
-    const res = await fetch(`${API}/api/auth/signup`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, name })
-    });
+    const res = await fetch(`${API}/api/auth/signup`, { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({email, password, name}) });
     const data = await res.json();
     if (data.error) { showMsg(data.error, "error"); }
-    else {
-      showMsg("Account created! Please check your email to confirm, then login.", "success");
-      setTimeout(() => switchTab("login"), 2000);
-    }
-  } catch(e) {
-    showMsg("Cannot connect to server. Is backend running?", "error");
-  }
+    else { showMsg("Account created! Please login.", "success"); setTimeout(() => switchTab("login"), 2000); }
+  } catch(e) { showMsg("Cannot connect to server. Try again!", "error"); }
   btn.disabled = false; btn.textContent = "Create Account 🚀";
 }
-
-// Enter key support
-document.addEventListener("keydown", e => {
-  if (e.key === "Enter") {
-    if (document.getElementById("loginForm").style.display !== "none") login();
-    else signup();
-  }
-});
-
-// If already logged in, redirect
+document.addEventListener("keydown", e => { if(e.key==="Enter") { if(document.getElementById("loginForm").style.display!=="none") login(); else signup(); } });
 if (localStorage.getItem("ht_token")) window.location.href = "app.html";
 </script>
 </body>
