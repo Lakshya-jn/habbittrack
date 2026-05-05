@@ -189,6 +189,19 @@ def save_streaks():
             json=data
         )
     return jsonify(res.json())
+@app.route("/api/auth/forgot-password", methods=["POST"])
+def forgot_password():
+    email = request.json.get("email")
+    res = requests.post(
+        f"{SUPABASE_URL}/auth/v1/recover",
+        headers={
+            "apikey": SUPABASE_KEY,
+            "Content-Type": "application/json"
+        },
+        json={"email": email}
+    )
+    print("FORGOT PASSWORD response:", res.status_code)
+    return jsonify({"message": "Reset link sent!"})
 
 @app.route("/api/health")
 def health():
