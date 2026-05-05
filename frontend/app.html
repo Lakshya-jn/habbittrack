@@ -43,6 +43,7 @@ body { background:var(--bg); color:var(--text); font-family:'Space Grotesk',sans
   background: var(--orange-dim);
   border-color: var(--orange);
 }
+.date-chip { font-size:0.72rem; color:var(--muted); background:var(--card); border:1px solid var(--border); padding:5px 12px; border-radius:999px; font-weight:500; white-space:nowrap; }
 .logout-btn { background:var(--red-dim); border:1px solid rgba(239,68,68,0.3); color:var(--red); border-radius:999px; padding:5px 10px; font-size:0.72rem; font-weight:600; cursor:pointer; }
 
 /* MAIN */
@@ -174,14 +175,15 @@ body { background:var(--bg); color:var(--text); font-family:'Space Grotesk',sans
     <div class="logo-name">Habbit<span>Track</span></div>
   </div>
   <div class="topbar-right">
+    <div class="date-chip" id="dateChip"></div>
     <div class="streak-chip">🔥 <span id="topStreak">0</span></div>
     <div class="user-chip">
       <div class="user-avatar" id="userAvatar">?</div>
       <span id="userName">User</span>
     </div>
     <button class="notif-btn" id="notifBtn" onclick="toggleNotifications()">🔔</button>
-<button class="logout-btn" onclick="logout()">Out</button>
-  </div>
+    <button class="logout-btn" onclick="logout()">Out</button>
+</div>
 </div>
 
 <div class="main">
