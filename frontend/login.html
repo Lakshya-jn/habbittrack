@@ -241,7 +241,15 @@ async function signup() {
   btn.disabled = false; btn.textContent = "Create Account 🚀";
 }
 document.addEventListener("keydown", e => { if(e.key==="Enter") { if(document.getElementById("loginForm").style.display!=="none") login(); else signup(); } });
-if (localStorage.getItem("ht_token")) window.location.href = "app.html";
+// Check if this is a password reset redirect
+const hashParams = new URLSearchParams(window.location.hash.substring(1));
+const accessToken = hashParams.get("access_token");
+const type = hashParams.get("type");
+if (type === "recovery" && accessToken) {
+  window.location.href = "reset.html" + window.location.hash;
+} else if (localStorage.getItem("ht_token")) {
+  window.location.href = "app.html";
+}
 </script>
 </body>
 </html>
